@@ -14,12 +14,18 @@ public class SudokuGameTest {
     public void setUp() throws Exception {
         game = new SudokuGame();
         game.board = new char[9][9];
+
+        for (int i=0; i<9; ++i)
+            for (int j=0; j<9; ++j)
+                game.board[i][j] = '0';
     }
 
     @Test
     public void testSubBox() throws Exception {
-        for (int i=0; i<3; ++i)
-            for (int j=0; j<3; ++j)
-                game.board[i][j] = '0';
+        game.board[1][3] = '*';
+        assertEquals('*', game.subBox(1, 3));
+
+        game.board[6][7] = '8';
+        assertEquals('8', game.subBox(8, 1));
     }
 }

@@ -2,8 +2,10 @@
 *.class
 
 # Intellij
-.idea/
-*.iml
+#.idea/
+#*.iml
+workspace.xml
+tasks.xml
 
 # Mac
 .DS_Store

@@ -21,11 +21,18 @@ public class SudokuGameTest {
     }
 
     @Test
-    public void testSubBox() throws Exception {
-        game.board[1][3] = '*';
-        assertEquals('*', game.subBox(1, 3));
+    public void testboard2SubBox() throws Exception {
+        SudokuGame.Point pnt= new SudokuGame.Point(1, 8);
+        SudokuGame.Point boxPnt = SudokuGame.board2SubBox(pnt);
+        assertEquals(6, boxPnt.x);
+        assertEquals(7, boxPnt.y);
+    }
 
-        game.board[6][7] = '8';
-        assertEquals('8', game.subBox(8, 1));
+    @Test
+    public void testSubBox2Board() throws Exception {
+        SudokuGame.Point pnt= new SudokuGame.Point(6, 7);
+        SudokuGame.Point boxPnt = SudokuGame.subBox2Board(pnt);
+        assertEquals(1, boxPnt.x);
+        assertEquals(8, boxPnt.y);
     }
 }

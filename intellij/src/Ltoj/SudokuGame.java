@@ -11,13 +11,36 @@ public class SudokuGame {
         return false;
     }
 
-    public char subBox(int boxIndex, int cellIndex){
-        int row = boxIndex / 3;
-        int col = boxIndex % 3;
+    final static class Point {
+        Point(int xTag, int yTag){
+            x = xTag;
+            y = yTag;
+        }
+        int x;
+        int y;
+    }
 
-        int y = 3 * row + cellIndex / 3;
-        int x = 3 * col + cellIndex % 3;
+    public static Point board2SubBox(Point pnt) {
+        Point boxPnt = new Point(0, 0);
 
-        return board[y][x];
+        int row = pnt.y / 3;
+        boxPnt.x = row * 3 + pnt.x / 3;
+
+        row = pnt.y % 3;
+        boxPnt.y = row * 3 + pnt.x % 3;
+
+        return boxPnt;
+    }
+
+    public static Point subBox2Board(Point pntBox) {
+        Point pnt = new Point(0, 0);
+
+        int row = pntBox.x / 3;
+        int col = pntBox.x % 3;
+
+        pnt.y = row * 3 + pntBox.y / 3;
+        pnt.x = col * 3 + pntBox.y % 3;
+
+        return pnt;
     }
 }

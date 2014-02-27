@@ -30,4 +30,20 @@ public class NextPermutationTest {
         sln.nextPermutation(a);
         assertArrayEquals(new int[]{3, 4, 5}, a);
     }
+
+    @Test
+    public void testNextPermutation4() throws Exception {
+        NextPermutation sln = new NextPermutation();
+        int[] a = new int[]{3, 5, 4, 2};
+        sln.nextPermutation(a);
+        assertArrayEquals(new int[]{4, 2, 3, 5}, a);
+    }
+
+    @Test
+    public void testNextPermutation5() throws Exception {
+        NextPermutation sln = new NextPermutation();
+        int[] a = new int[]{5, 1, 1};
+        sln.nextPermutation(a);
+        assertArrayEquals(new int[]{1, 1, 5}, a);
+    }
 }

@@ -1,6 +1,7 @@
 package Ltoj;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -34,5 +35,13 @@ public class SudokuGameTest {
         SudokuGame.Point boxPnt = SudokuGame.subBox2Board(pnt);
         assertEquals(1, boxPnt.x);
         assertEquals(8, boxPnt.y);
+    }
+
+    @Ignore
+    @Test
+    public void testNextPermutation() throws Exception {
+        char [] a = new char[]{'1', '2', '3'};
+        char [] b = SudokuGame.nextPermutation(a);
+        assertArrayEquals(new char[]{'1', '3', '2'}, b);
     }
 }

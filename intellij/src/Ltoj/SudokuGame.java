@@ -43,4 +43,9 @@ public class SudokuGame {
 
         return pnt;
     }
+
+    public static char[] nextPermutation(char[] s)
+    {
+        return s;
+    }
 }

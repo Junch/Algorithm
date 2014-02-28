@@ -10,7 +10,7 @@ public class NextPermutationTest {
     @Test
     public void testNextPermutation1() throws Exception {
         NextPermutation sln = new NextPermutation();
-        int[] a = new int[]{1, 2, 3};
+        int[] a = {1, 2, 3};
         sln.nextPermutation(a);
         assertArrayEquals(new int[]{1, 3, 2}, a);
     }
@@ -18,7 +18,7 @@ public class NextPermutationTest {
     @Test
     public void testNextPermutation2() throws Exception {
         NextPermutation sln = new NextPermutation();
-        int[] a = new int[]{4, 5, 3};
+        int[] a = {4, 5, 3};
         sln.nextPermutation(a);
         assertArrayEquals(new int[]{5, 3, 4}, a);
     }
@@ -26,7 +26,7 @@ public class NextPermutationTest {
     @Test
     public void testNextPermutation3() throws Exception {
         NextPermutation sln = new NextPermutation();
-        int[] a = new int[]{5, 4, 3};
+        int[] a = {5, 4, 3};
         sln.nextPermutation(a);
         assertArrayEquals(new int[]{3, 4, 5}, a);
     }
@@ -34,7 +34,7 @@ public class NextPermutationTest {
     @Test
     public void testNextPermutation4() throws Exception {
         NextPermutation sln = new NextPermutation();
-        int[] a = new int[]{3, 5, 4, 2};
+        int[] a = {3, 5, 4, 2};
         sln.nextPermutation(a);
         assertArrayEquals(new int[]{4, 2, 3, 5}, a);
     }
@@ -42,7 +42,7 @@ public class NextPermutationTest {
     @Test
     public void testNextPermutation5() throws Exception {
         NextPermutation sln = new NextPermutation();
-        int[] a = new int[]{5, 1, 1};
+        int[] a = {5, 1, 1};
         sln.nextPermutation(a);
         assertArrayEquals(new int[]{1, 1, 5}, a);
     }

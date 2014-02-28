@@ -29,9 +29,7 @@ public class NQueensTest {
         ArrayList<String[]> arr = sln.solveNQueens(4);
         assertEquals(2, arr.size());
 
-        String[] arr0 = new String[]{
-                ".Q..", "...Q", "Q...", "..Q."
-        };
+        String[] arr0 = { ".Q..", "...Q", "Q...", "..Q." };
 
         assertArrayEquals(arr0, arr.get(0));
     }

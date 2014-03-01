@@ -38,11 +38,12 @@ public class ValidSudokuTest {
     @Test
     public void testSubBox() throws Exception {
         char board[][] = new char[9][9];
+        game.board = board;
 
         board[1][3] = '*';
-        assertEquals('*', game.subBox(board, 1, 3));
+        assertEquals('*', game.subBox(1, 3));
 
         board[6][7] = '8';
-        assertEquals('8', game.subBox(board, 8, 1));
+        assertEquals('8', game.subBox(8, 1));
     }
 }

@@ -18,6 +18,21 @@ public class SudokuSolver {
         fillNumbers(row, arr);
     }
 
+    public static boolean isLastPermutatation(final char[] num) {
+        int nCount = getFilledCount(num);
+        nCount = 9 - nCount;
+
+        char[] arr = new char[nCount];
+        int j = 0;
+        for (char c: num){
+            if (c > '9') {
+                arr[j++] = c;
+            }
+        }
+
+        return isLastPermutate(arr);
+    }
+
     private static void fillNumbers(char[] row, char[] arr) {
         int i = 0;
         for(int j=0; j<9; ++j){
@@ -84,6 +99,10 @@ public class SudokuSolver {
             --i;
 
         return i;
+    }
+
+    public static boolean isLastPermutate(char[] num){
+        return indexToDecrease(num) == 0;
     }
 
     private static char[] getInitialFillNumbers(final char[] row, int nCount) {

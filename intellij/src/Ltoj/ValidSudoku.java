@@ -5,53 +5,46 @@ package Ltoj;
  * Created by jun on 14-2-26.
  */
 public class ValidSudoku {
+    char board[][];
+
     public boolean isValidSudoku(char[][] board) {
-        if (!validRows(board))
-            return false;
+        this.board = board;
 
-        if (!validColumns(board))
-            return false;
-
-        if (!validSubBoxes(board))
-            return false;
-
-        return true;
-    }
-
-    private boolean validSubBoxes(char[][] board) {
-        char[] arr = new char[9];
-        for (int boxIndex=0; boxIndex<9; ++boxIndex){
-            for (int cellIndex=0; cellIndex<9; ++cellIndex){
-                arr[cellIndex] = subBox(board, boxIndex, cellIndex);
-            }
-
-            if (!validArray(arr))
+        for (int i=0; i<9; ++i){
+            if (!validRow(i))
+                return false;
+            if (!validColumn(i))
+                return false;
+            if(!validBox(i))
                 return false;
         }
+
         return true;
     }
 
-    private boolean validColumns(char[][] board) {
-        char[] arr = new char[board.length];
-        for (int i=0; i<board[0].length; ++i) {
-            for(int j=0; j<board.length; ++j)
-                arr[j] = board[j][i];
-
-            if (!validArray(arr))
-                return false;
-        }
-        return true;
+    private boolean validRow(int row) {
+        return validArray(board[row]);
     }
 
-    private boolean validRows(char[][] board) {
-        for (int i=0; i<board.length; ++i){
-            if (!validArray(board[i]))
-                return false;
-        }
-        return true;
+    private boolean validColumn(int col){
+        char arr[] = new char[board.length];
+
+        for(int i=0; i<board.length; ++i)
+            arr[i] = board[i][col];
+
+        return validArray(arr);
     }
 
-    public char subBox(char[][] board, int boxIndex, int cellIndex) {
+    private boolean validBox(int box) {
+        char arr[] = new char[9];
+
+        for (int cellIndex=0; cellIndex<9; ++cellIndex)
+            arr[cellIndex] = subBox(box, cellIndex);
+
+        return validArray(arr);
+    }
+
+    public char subBox(int boxIndex, int cellIndex) {
         int row = boxIndex / 3;
         int col = boxIndex % 3;
 

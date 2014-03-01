@@ -8,9 +8,59 @@ import java.util.*;
 public class SudokuSolver {
     char[][] board = null;
     final static int offset = 10;
+    PermutationPro permutation = new PermutationPro();
+    int currentRow = 0;
 
     public void solveSudoku(char[][] board) {
-        this.board = board;
+        currentRow = 0;
+        permutation.setArray(board[currentRow]);
+        permutation.next();
+
+        while (currentRow > 0) {
+            if (currentRow == 9 ) {
+                // Get the right answers
+                return;
+            }
+
+            permutation.setArray(board[currentRow+1]);
+
+            // Find the next row
+            boolean bGetNextRow = false;
+            permutation.turnToNotFilled();
+            while(!permutation.isLast()) {
+                permutation.next();
+                if(isValid()){
+                   bGetNextRow = true;
+                   ++currentRow;
+                   break;
+                }
+            }
+
+            if (bGetNextRow)
+                continue;
+
+            backTracing();
+        }
+    }
+
+    private void backTracing(){
+        do {
+            permutation.setArray(board[currentRow]);
+            permutation.turnToNotFilled();
+
+            --currentRow;
+            permutation.setArray(board[currentRow]);
+            while(!permutation.isLast()){
+                permutation.next();
+                if (isValid()){
+                    return;
+                }
+            }
+        } while(currentRow > 0);
+    }
+
+    private boolean isValid(){
+        return true;
     }
 
     static class Permutation {
@@ -72,13 +122,20 @@ public class SudokuSolver {
             return nCount;
         }
 
-        public boolean isFirst(){
+        public boolean notFilled(){
             for(char c: arr){
                 if (c == '.')
                     return true;
             }
 
             return false;
+        }
+
+        public void turnToNotFilled(){
+            for (int i=0; i<arr.length; ++i){
+                if (arr[i] > '9')
+                    arr[i] = '.';
+            }
         }
 
         public boolean isLast(){
@@ -104,7 +161,7 @@ public class SudokuSolver {
         }
 
         private char[] getFillNumbers() {
-            if (isFirst()) {
+            if (notFilled()) {
                 return getInitialFillNumbers();
             }
 

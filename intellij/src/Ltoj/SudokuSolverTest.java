@@ -52,6 +52,16 @@ public class SudokuSolverTest {
     }
 
     @Test
+    public void testTurnToUnFilled() throws Exception {
+        char[] row = {'5', '6', '1'+10, '8', '4', '7', '2'+10, '3'+10, '9'+10};
+        perPro.setArray(row);
+        perPro.turnToNotFilled();
+
+        char[] ret = {'5', '6', '.', '8', '4', '7', '.', '.', '.'};
+        assertArrayEquals(ret, row);
+    }
+
+    @Test
     public void testNextPermutationBiggestOne() throws Exception {
         char[] row = {'5', '6', '9'+10, '8', '4', '7', '3'+10, '2'+10, '1'+10};
         perPro.setArray(row);

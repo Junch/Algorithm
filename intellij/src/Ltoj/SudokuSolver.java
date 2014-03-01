@@ -22,7 +22,7 @@ public class SudokuSolver {
         int i = 0;
         for(int j=0; j<9; ++j){
             if (row[j] < '1' || row[j] > '9'){
-                row[j] = (char)(arr[i++] + offset);
+                row[j] = (char)(arr[i++]);
             }
         }
     }
@@ -49,7 +49,7 @@ public class SudokuSolver {
             int j = 0;
             for(char c: row) {
                 if (c > '9')
-                    arr[j++] = (char)(c - offset);
+                    arr[j++] = c;
             }
 
             nextPermutate(arr);
@@ -100,7 +100,7 @@ public class SudokuSolver {
         int j = 0;
         for (i=0; i<9; ++i){
             if (!flags[i])
-                arr[j++] = (char)('1' + i);
+                arr[j++] = (char)('1' + i + offset);
         }
 
         return arr;

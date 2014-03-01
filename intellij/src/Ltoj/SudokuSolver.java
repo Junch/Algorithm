@@ -13,125 +13,143 @@ public class SudokuSolver {
         this.board = board;
     }
 
-    public static void nextPermutation(char[] row) {
-        char[] arr = getFillNumbers(row);
-        fillNumbers(row, arr);
-    }
+    static class Permutation {
+        char [] arr;
 
-    public static boolean isLastPermutatation(final char[] num) {
-        int nCount = getFilledCount(num);
-        nCount = 9 - nCount;
+        public void setArray(char[] arr){
+            this.arr = arr;
+        }
 
-        char[] arr = new char[nCount];
-        int j = 0;
-        for (char c: num){
-            if (c > '9') {
-                arr[j++] = c;
+        public char[] next() {
+            int i = indexToDecrease();
+            if (i != 0) {
+                swapWithSmallestBiggerValue(i);
             }
+
+            Arrays.sort(arr, i, arr.length);
+            return arr;
         }
 
-        return isLastPermutate(arr);
-    }
+        public boolean isLast() {
+            return indexToDecrease() == 0;
+        }
 
-    private static void fillNumbers(char[] row, char[] arr) {
-        int i = 0;
-        for(int j=0; j<9; ++j){
-            if (row[j] < '1' || row[j] > '9'){
-                row[j] = (char)(arr[i++]);
+        private void swapWithSmallestBiggerValue(int i) {
+            int j = i + 1;
+            while(j < arr.length && arr[j] > arr[i-1])
+                ++j;
+            --j;
+
+            char temp = arr[i-1];
+            arr[i-1] = arr[j];
+            arr[j] = temp;
+        }
+
+        private int indexToDecrease() {
+            int i = arr.length - 1;
+            while(i > 0 && arr[i-1] >= arr[i])
+                --i;
+
+            return i;
+        }
+    };
+
+    static class PermutationPro {
+        char [] arr;
+        Permutation per = new Permutation();
+
+        public void setArray(char[] arr){
+            this.arr = arr;
+        }
+
+        private int getFilledCount() {
+            int nCount = 0;
+            for(char c: arr) {
+                if (c >= '1' && c <= '9') {
+                    ++nCount;
+                }
             }
-        }
-    }
-
-    private static boolean firstTime(final char[] row){
-        for(char c: row){
-            if (c == '.')
-                return true;
+            return nCount;
         }
 
-        return false;
-    }
+        public boolean isFirst(){
+            for(char c: arr){
+                if (c == '.')
+                    return true;
+            }
 
-    private static char[] getFillNumbers(final char[] row) {
-        boolean bFirst = firstTime(row);
-        int nCount = 9 - getFilledCount(row);
-        char[] arr = null;
+            return false;
+        }
 
-        if (bFirst) {
-            arr = getInitialFillNumbers(row, nCount);
-        }else {
-            arr = new char[nCount];
+        public boolean isLast(){
+            int nCount = getFilledCount();
+            nCount = 9 - nCount;
+
+            char[] arrNum = new char[nCount];
+            int j = 0;
+            for (char c: arr){
+                if (c > '9') {
+                    arrNum[j++] = c;
+                }
+            }
+
+            per.setArray(arrNum);
+            return per.isLast();
+        }
+
+        public char[] next() {
+            char[] numbers = getFillNumbers();
+            fill(numbers);
+            return arr;
+        }
+
+        private char[] getFillNumbers() {
+            if (isFirst()) {
+                return getInitialFillNumbers();
+            }
+
+            int nCount = 9 - getFilledCount();
+            char arrRet[] = new char[nCount];
 
             int j = 0;
-            for(char c: row) {
+            for(char c: arr) {
                 if (c > '9')
-                    arr[j++] = c;
+                    arrRet[j++] = c;
             }
 
-            nextPermutate(arr);
+            per.setArray(arrRet);
+            arrRet = per.next();
+            return arrRet;
         }
 
-        return arr;
-    }
+        private char[] getInitialFillNumbers() {
+            int nCount = 9 - getFilledCount();
+            char arrRet[] = new char[nCount];
+            boolean flags[] = new boolean[9];
 
-    public static void nextPermutate(char[] num) {
-        int i = indexToDecrease(num);
-        if (i != 0) {
-            swapWithSmallestBiggerValue(num, i);
+            int i = 0;
+            for(char c: arr) {
+                if (c >= '1' && c <= '9') {
+                    flags[c - '1'] = true;
+                }
+            }
+
+            int j = 0;
+            for (i=0; i<9; ++i){
+                if (!flags[i])
+                    arrRet[j++] = (char)('1' + i + offset);
+            }
+
+            return arrRet;
         }
 
-        Arrays.sort(num, i, num.length);
-    }
-
-    private static void swapWithSmallestBiggerValue(char[] num, int i) {
-        int j = i + 1;
-        while(j < num.length && num[j] > num[i-1])
-            ++j;
-        --j;
-
-        char temp = num[i-1];
-        num[i-1] = num[j];
-        num[j] = temp;
-    }
-
-    private static int indexToDecrease(char[] num) {
-        int i = num.length - 1;
-        while(i > 0 && num[i-1] >= num[i])
-            --i;
-
-        return i;
-    }
-
-    public static boolean isLastPermutate(char[] num){
-        return indexToDecrease(num) == 0;
-    }
-
-    private static char[] getInitialFillNumbers(final char[] row, int nCount) {
-        char arr[] = new char[nCount];
-        boolean flags[] = new boolean[9];
-
-        int i = 0;
-        for(char c: row) {
-            if (c >= '1' && c <= '9') {
-                flags[c - '1'] = true;
+        private void fill(char[] numbers) {
+            int i = 0;
+            for(int j=0; j<9; ++j){
+                if (arr[j] < '1' || arr[j] > '9'){
+                    arr[j] = (char)(numbers[i++]);
+                }
             }
         }
-
-        int j = 0;
-        for (i=0; i<9; ++i){
-            if (!flags[i])
-                arr[j++] = (char)('1' + i + offset);
-        }
-
-        return arr;
-    }
-
-    private static int getFilledCount(final char[] row) {
-        int nCount = 0;
-        for(char c: row) {
-            if (c >= '1' && c <= '9') {
-                ++nCount;
-            }
-        }
-        return nCount;
-    }
+    };
 }

@@ -11,9 +11,13 @@ import static org.junit.Assert.*;
  * Created by jun on 14-2-28.
  */
 public class SudokuSolverTest {
+    SudokuSolver game;
+    SudokuSolver.PermutationPro perPro;
+
     @Before
     public void setUp() throws Exception {
-        SudokuSolver game = new SudokuSolver();
+        game = new SudokuSolver();
+        perPro = new SudokuSolver.PermutationPro();
     }
 
     @Ignore
@@ -25,22 +29,24 @@ public class SudokuSolverTest {
     @Test
     public void testNextPermutationInit() throws Exception {
         char[] row = {'5', '6', '.', '8', '4', '7', '.', '.', '.'};
-        SudokuSolver.nextPermutation(row);
+        perPro.setArray(row);
+
         int offset = SudokuSolver.offset;
         char[] ret = {'5', '6', (char)('1' + offset), '8', '4', '7',
-                      (char)('2'+offset),
-                      (char)('3'+offset),
-                      (char)('9'+offset)};
+                (char)('2'+offset),
+                (char)('3'+offset),
+                (char)('9'+offset)};
 
-        assertArrayEquals(ret, row);
+        assertArrayEquals(ret, perPro.next());
     }
 
     @Test
     public void testNextPermutationSecond() throws Exception {
         char[] row = {'5', '6', '1'+10, '8', '4', '7', '2'+10, '3'+10, '9'+10};
-        assertEquals(false, SudokuSolver.isLastPermutatation(row));
+        perPro.setArray(row);
+        assertEquals(false, perPro.isLast());
 
-        SudokuSolver.nextPermutation(row);
+        perPro.next();
         char[] ret = {'5', '6', '1'+10, '8', '4', '7', '2'+10, '9'+10, '3'+10};
         assertArrayEquals(ret, row);
     }
@@ -48,9 +54,10 @@ public class SudokuSolverTest {
     @Test
     public void testNextPermutationBiggestOne() throws Exception {
         char[] row = {'5', '6', '9'+10, '8', '4', '7', '3'+10, '2'+10, '1'+10};
-        assertEquals(true, SudokuSolver.isLastPermutatation(row));
+        perPro.setArray(row);
+        assertEquals(true, perPro.isLast());
 
-        SudokuSolver.nextPermutation(row);
+        perPro.next();
         char[] ret = {'5', '6', '1'+10, '8', '4', '7', '2'+10, '3'+10, '9'+10};
         assertArrayEquals(ret, row);
     }
@@ -58,24 +65,18 @@ public class SudokuSolverTest {
     @Test
     public void testNextPermutate() throws Exception {
         char[] a = {'5', '3', '4'};
-        SudokuSolver.nextPermutate(a);
-        assertArrayEquals(new char[]{'5', '4', '3'}, a);
+        SudokuSolver.Permutation per = new SudokuSolver.Permutation();
+        per.setArray(a);
+        assertEquals(false, per.isLast());
+        assertArrayEquals(new char[]{'5', '4', '3'}, per.next());
     }
 
     @Test
-    public void testNextPermutateToEnd() throws Exception {
+    public void testNextPermutateNext() throws Exception {
         char[] a = {'5', '4', '3'};
-        SudokuSolver.nextPermutate(a);
-        assertArrayEquals(new char[]{'3', '4', '5'}, a);
-    }
-
-    @Test
-    public void testIsLastPermutation() throws Exception {
-        char[] a = {'5', '4', '3'};
-        boolean ret = SudokuSolver.isLastPermutate(a);
-        assertEquals(true, ret);
-
-        SudokuSolver.nextPermutate(a);
-        assertArrayEquals(new char[]{'3', '4', '5'}, a);
+        SudokuSolver.Permutation per = new SudokuSolver.Permutation();
+        per.setArray(a);
+        assertEquals(true, per.isLast());
+        assertArrayEquals(new char[]{'3', '4', '5'}, per.next());
     }
 }

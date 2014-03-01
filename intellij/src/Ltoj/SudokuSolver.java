@@ -1,6 +1,6 @@
 package Ltoj;
 
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * Created by jun on 14-2-28.
@@ -21,7 +21,7 @@ public class SudokuSolver {
     private static void fillNumbers(char[] row, char[] arr) {
         int i = 0;
         for(int j=0; j<9; ++j){
-            if (row[j] == '.'){
+            if (row[j] < '1' || row[j] > '9'){
                 row[j] = (char)(arr[i++] + offset);
             }
         }
@@ -51,12 +51,39 @@ public class SudokuSolver {
                 if (c > '9')
                     arr[j++] = (char)(c - offset);
             }
+
+            nextPermutate(arr);
         }
 
         return arr;
     }
 
-    private static void nextPermutate(char[] arr){
+    public static void nextPermutate(char[] num) {
+        int i = indexToDecrease(num);
+        if (i != 0) {
+            swapWithSmallestBiggerValue(num, i);
+        }
+
+        Arrays.sort(num, i, num.length);
+    }
+
+    private static void swapWithSmallestBiggerValue(char[] num, int i) {
+        int j = i + 1;
+        while(j < num.length && num[j] > num[i-1])
+            ++j;
+        --j;
+
+        char temp = num[i-1];
+        num[i-1] = num[j];
+        num[j] = temp;
+    }
+
+    private static int indexToDecrease(char[] num) {
+        int i = num.length - 1;
+        while(i > 0 && num[i-1] >= num[i])
+            --i;
+
+        return i;
     }
 
     private static char[] getInitialFillNumbers(final char[] row, int nCount) {

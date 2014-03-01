@@ -35,12 +35,18 @@ public class SudokuSolverTest {
         assertArrayEquals(ret, row);
     }
 
-    @Ignore
     @Test
     public void testNextPermutationSecond() throws Exception {
         char[] row = {'5', '6', '1'+10, '8', '4', '7', '2'+10, '3'+10, '9'+10};
         SudokuSolver.nextPermutation(row);
         char[] ret = {'5', '6', '1'+10, '8', '4', '7', '2'+10, '9'+10, '3'+10};
         assertArrayEquals(ret, row);
+    }
+
+    @Test
+    public void testNextPermutate() throws Exception {
+        char[] a = {'5', '3', '4'};
+        SudokuSolver.nextPermutate(a);
+        assertArrayEquals(new char[]{'5', '4', '3'}, a);
     }
 }

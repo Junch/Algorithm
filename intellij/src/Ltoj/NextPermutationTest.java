@@ -1,4 +1,4 @@
-package Ltoj;
+package ltoj;
 
 import org.junit.Test;
 import static org.junit.Assert.*;

@@ -1,6 +1,5 @@
-package Ltoj;
+package ltoj;
 
-import com.sun.swing.internal.plaf.synth.resources.synth_sv;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;

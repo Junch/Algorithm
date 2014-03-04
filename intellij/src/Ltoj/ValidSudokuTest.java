@@ -1,4 +1,4 @@
-package Ltoj;
+package ltoj;
 
 import org.junit.Before;
 import org.junit.Test;

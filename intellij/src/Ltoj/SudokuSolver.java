@@ -1,4 +1,4 @@
-package Ltoj;
+package ltoj;
 
 import java.util.*;
 

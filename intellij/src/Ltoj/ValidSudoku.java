@@ -1,4 +1,4 @@
-package Ltoj;
+package ltoj;
 
 /**
  * http://oj.leetcode.com/problems/valid-sudoku/

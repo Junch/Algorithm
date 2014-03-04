@@ -25,4 +25,17 @@ public class LinkedListCycleTest {
         LinkedListCycle c = new LinkedListCycle();
         assertEquals(false, c.hasCycle(node0));
     }
+
+
+    @Test
+    public void detectCycle() throws Exception {
+        ListNode node0 = new ListNode(0);
+        ListNode node1 = new ListNode(1);
+        ListNode node2 = new ListNode(2);
+        node0.next = node1;
+        node1.next = node2;
+        node2.next = node1;
+        LinkedListCycle c = new LinkedListCycle();
+        assertEquals(node1, c.detectCycle(node0));
+    }
 }

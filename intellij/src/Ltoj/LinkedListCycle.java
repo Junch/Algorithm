@@ -2,25 +2,65 @@ package ltoj;
 
 import java.util.*;
 
+//http://www.cnblogs.com/hiddenfox/p/3408931.html
+
 /**
  * Created by jun on 14-3-4.
  */
 public class LinkedListCycle {
     public boolean hasCycle(ListNode head) {
 
-        ListNode g = head;
-        ListNode h = head;
+        ListNode slow = head;
+        ListNode fast = head;
 
-        while (h != null) {
-            g = g.next;
-            h = h.next;
-            if (h == null)
+        while (fast != null) {
+            slow = slow.next;
+            fast = fast.next;
+            if (fast == null)
                 return false;
-            h = h.next;
-            if (g == h)
+            fast = fast.next;
+            if (slow == fast)
                 return true;
         }
 
         return false;
+    }
+
+    public ListNode detectCycle(ListNode head) {
+
+        ListNode meetNode = getMeetNode(head);
+        if (meetNode == null)
+            return null;
+
+        return getCycleStart(head, meetNode);
+    }
+
+    private ListNode getMeetNode(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (fast != null) {
+            slow = slow.next;
+            fast = fast.next;
+            if (fast == null)
+                return null;
+            fast = fast.next;
+            if (slow == fast)
+                break;
+        }
+
+        return (fast == null)? null: fast;
+    }
+
+    private ListNode getCycleStart(ListNode head, ListNode meetNode) {
+        ListNode p = head;
+        ListNode q = meetNode;
+
+        while(p != q){
+            p = p.next;
+            q = q.next;
+        }
+
+        return p;
     }
 }

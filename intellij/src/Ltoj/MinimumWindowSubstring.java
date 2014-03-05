@@ -19,8 +19,8 @@ public class MinimumWindowSubstring {
             if (j >= 0) {
                 arr[j] = i;
 
-                int min = S.length();
-                int max = -2;
+                int min = i;
+                int max = i;
                 for (int k: arr){
                     if (k < min)
                         min = k;
